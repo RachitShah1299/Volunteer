@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/c"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_125sdp"
+        android:layout_margin="@dimen/_8sdp"
+        app:cardBackgroundColor="@color/startblue"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="@dimen/_10sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:src="@drawable/res1" />
+
+            <TextView
+                android:id="@+id/rec_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_toRightOf="@+id/img"
+                android:text="Sandwich House"
+                android:textColor="@color/graylight"
+                android:textSize="@dimen/_18ssp" />
+
+            <TextView
+                android:id="@+id/rec_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rec_name"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_toRightOf="@+id/img"
+                android:text="S.G Highway"
+                android:textColor="@color/graylight" />
+
+            <TextView
+                android:id="@+id/rec_rid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:text="Request Id"
+                android:textColor="@color/graylight"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/rec_req"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img"
+                android:layout_marginLeft="@dimen/_140sdp"
+                android:layout_toRightOf="@+id/rec_rid"
+                android:text="FD001"
+                android:textColor="@color/graylight" />
+
+            <TextView
+                android:id="@+id/rec_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rec_rid"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:text="Status"
+                android:textColor="@color/graylight" />
+
+            <TextView
+                android:id="@+id/stt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rec_req"
+                android:layout_marginLeft="@dimen/_135sdp"
+                android:layout_toRightOf="@+id/rec_rid"
+                android:text="Delivered"
+                android:textColor="@color/graylight" />
+
+            <TextView
+                android:id="@+id/dl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rec_stat"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:text="Delivered On"
+                android:textColor="@color/graylight" />
+
+            <TextView
+                android:id="@+id/dld"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/stt"
+                android:layout_marginLeft="@dimen/_100sdp"
+                android:layout_toRightOf="@+id/dl"
+                android:text="04:29 Pm 03-02-19"
+                android:textColor="@color/graylight" />
+
+            <TextView
+                android:id="@+id/lc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dl"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:text="Delivery Location"
+                android:textColor="@color/graylight" />
+
+            <TextView
+                android:id="@+id/lcp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dld"
+                android:layout_marginLeft="@dimen/_115sdp"
+                android:layout_toRightOf="@+id/dl"
+                android:text="Sal Hospital"
+                android:textColor="@color/graylight" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

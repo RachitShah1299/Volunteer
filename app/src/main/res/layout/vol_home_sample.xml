@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+
+        android:id="@+id/c1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_155sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:elevation="@dimen/_5sdp"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="@dimen/_10sdp"
+        app:cardBackgroundColor="@color/startblue"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:src="@drawable/res1" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_toRightOf="@+id/img"
+                android:text="Sandwich House"
+                android:textColor="@color/graylight"
+                android:textSize="@dimen/_18ssp" />
+
+            <TextView
+                android:id="@+id/loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_toRightOf="@+id/img"
+                android:text="S.G Highway"
+                android:textColor="@color/graylight" />
+
+            <TextView
+                android:id="@+id/rid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:text="Request Id"
+                android:textColor="@color/graylight" />
+
+            <TextView
+                android:id="@+id/req"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img"
+                android:layout_marginLeft="@dimen/_160sdp"
+                android:layout_toRightOf="@+id/rid"
+                android:text="FD001"
+                android:textColor="@color/graylight" />
+
+            <TextView
+                android:id="@+id/stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rid"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:text="Status"
+                android:textColor="@color/graylight" />
+
+            <TextView
+                android:id="@+id/stt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/req"
+                android:layout_marginLeft="@dimen/_155sdp"
+                android:layout_toRightOf="@+id/rid"
+                android:text="Pending"
+                android:textColor="@color/graylight" />
+
+            <TextView
+                android:id="@+id/ln"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/stat"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:text="-------------------------------------------------------------------------------------"
+                android:textColor="@color/graylight" />
+
+            <ImageButton
+                android:id="@+id/yes"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/ln"
+                android:layout_margin="@dimen/_2sdp"
+                android:background="@drawable/round"
+                android:src="@drawable/ac" />
+
+            <ImageButton
+                android:id="@+id/no"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/ln"
+                android:layout_margin="@dimen/_2sdp"
+                android:layout_toRightOf="@+id/yes"
+                android:background="@drawable/round"
+                android:src="@drawable/dc" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>
