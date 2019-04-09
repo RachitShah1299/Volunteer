@@ -21,6 +21,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,8 +54,8 @@ public class Delivery extends FragmentActivity implements OnMapReadyCallback, Lo
     FirebaseAuth mauth;
     String lattitude, longitude, key;
     String resname, volname, deldate, delloc, delrid;
-    Button button;
-    TextView textView;
+    Button button, pickup;
+    TextView textView, call;
     double lati, longi;
     String address;
     int b, e;
@@ -69,11 +70,12 @@ public class Delivery extends FragmentActivity implements OnMapReadyCallback, Lo
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
         textView = (TextView) findViewById(R.id.address);
         button = (Button) findViewById(R.id.deliver_btn);
 
-     //   getPermission();
 
+        getLocation();
 
         myref = FirebaseDatabase.getInstance().getReference("Delivery");
         mauth = FirebaseAuth.getInstance();
@@ -115,23 +117,6 @@ public class Delivery extends FragmentActivity implements OnMapReadyCallback, Lo
         });
     }
 
-/*    private void getPermission() {
-        if (ContextCompat.checkSelfPermission(Delivery.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(Delivery.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
-            Toast.makeText(Delivery.this, "Permission ", Toast.LENGTH_SHORT).show();
-            startActivity(getIntent());
-
-        } else {
-
-            getLocation();
-
-        }
-
-
-    }*/
-
-
     private void getLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -164,7 +149,7 @@ public class Delivery extends FragmentActivity implements OnMapReadyCallback, Lo
                 e = address.lastIndexOf("\"");
                 f_add = address.substring(b + 1, e);
                 Toast.makeText(Delivery.this, f_add, Toast.LENGTH_SHORT).show();
-                textView.setText(f_add);
+                //textView.setText(f_add);
 
             } catch (IOException e) {
                 e.printStackTrace();

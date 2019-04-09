@@ -1,6 +1,8 @@
 package com.example.rachitshah.volunteer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -35,8 +38,8 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN); //show the activity in full screen
+      /*  this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN); //show the activity in full screen*/
 
         setContentView(R.layout.activity_login);
 
@@ -125,7 +128,7 @@ public class Login extends AppCompatActivity {
                     if (!task.isSuccessful()) {
                         Toast.makeText(Login.this, "Invalid Credentials, Please try again!!", Toast.LENGTH_SHORT).show();
                     } else {
-
+                        savedata();
                         Intent it = new Intent(Login.this, Home.class);
                         startActivity(it);
 
@@ -139,6 +142,14 @@ public class Login extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mauth.addAuthStateListener(mauthListener);
+    }
+
+    private void savedata(){
+        SharedPreferences sharedPreferences = getSharedPreferences("Volunteer_log",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Log.e("Vollllemail","Email is: "+email);
+        editor.putString("Email", email);
+        editor.commit();
     }
 
 

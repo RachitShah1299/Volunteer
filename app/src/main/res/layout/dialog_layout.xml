@@ -28,12 +28,31 @@
         android:hint="Retype New Password"
         android:layout_alignParentLeft="true" />
 
+
+    <Button
+
+        android:layout_width="149dp"
+        android:layout_height="62dp"
+        android:layout_below="@id/RePass"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginRight="55dp"
+        android:layout_toStartOf="@+id/change_btn"
+        android:layout_toLeftOf="@+id/change_btn"
+        android:text="Cancel" />
+
+
     <Button
         android:id="@+id/change_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="145dp"
+        android:layout_height="66dp"
         android:layout_below="@+id/RePass"
-        android:text="Change Password"/>
+        android:layout_alignEnd="@+id/OldPass"
+        android:layout_alignRight="@+id/OldPass"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="-5dp"
+        android:layout_marginRight="-5dp"
+        android:text="Change Password" />
 
 
 

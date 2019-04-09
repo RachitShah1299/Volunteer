@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 
 public class vol_profile extends AppCompatActivity {
 
-    String path;
+    String path, x;
     Uri imageUri;
     ImageView img;
     ImageButton save;
@@ -43,8 +43,8 @@ public class vol_profile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN); //show the activity in full screen
+      /*  this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN); //show the activity in full screen*/
 
         setContentView(R.layout.activity_vol_profile);
 
@@ -123,50 +123,32 @@ public class vol_profile extends AppCompatActivity {
                 dialog.setTitle("Change Password");
 
 
-                EditText old = (EditText) dialog.findViewById(R.id.text);
-                EditText newpass = (EditText) dialog.findViewById(R.id.text);
-                EditText renew = (EditText) dialog.findViewById(R.id.text);
+                final EditText old = (EditText) dialog.findViewById(R.id.text);
+                final EditText newpass = (EditText) dialog.findViewById(R.id.text);
+                final EditText renew = (EditText) dialog.findViewById(R.id.text);
 
-
-
+                final String newpasswrd, renewpasswrd;
+                newpasswrd = newpass.getText().toString();
+                renewpasswrd = renew.getText().toString();
                 Button dialogButton = (Button) dialog.findViewById(R.id.change_btn);
-
-                dialogButton.setOnClickListener(new View.OnClickListener() {
+                Toast.makeText(getApplicationContext(), x,  Toast.LENGTH_SHORT).show();
+                /*dialogButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                              old.setText(x);
+                              if (newpasswrd == renewpasswrd)
+                              {
+                                  //Toast.makeText(getApplicationContext(), "Change",  Toast.LENGTH_SHORT).show();
+                              }
+                              else
+                              {
 
-                        /*getdata();
-                        String s1, s2, s3;
-                        s1 = old.getText().toString();
-                        s2 = newpass.getText().toString();
-                        s3 = repass.getText().toString();
-
-                        if(rpassword.compareTo(s1)==0){
-
-                            if(s2.length()==0) {
-                                Toast toast = makeText(getActivity(), "Password cannot be empty", LENGTH_SHORT);
-                                toast.show();
-
-                            }
-                            else {
-                                if (s2.compareTo(s3) == 0) {
-                                    myref.child(key1).child("passwrd").setValue(s2);
-                                    Toast toast = makeText(getActivity(), "Password updated", LENGTH_SHORT);
-                                    toast.show();
-
-
-                                }
-                                else{
-                                    Toast toast = makeText(getActivity(), "Password should match", LENGTH_SHORT);
-                                    toast.show();
-
-                                }
-*/
+                              }
 
 
                             }
                 });
-
+*/
                 dialog.show();
             }
         });
@@ -218,7 +200,7 @@ public class vol_profile extends AppCompatActivity {
         vaddress = sharedPreferences.getString("Address", "");
         vphone = sharedPreferences.getString("Phone", "");
 
-        String x;
+
         x = sharedPreferences.getString("Password", "");
         pswd.setText(x);
         name.setText(vname);

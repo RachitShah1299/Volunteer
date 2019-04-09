@@ -1,9 +1,11 @@
 package com.example.rachitshah.volunteer;
 
 import android.app.DatePickerDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -11,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.MimeTypeMap;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,16 +22,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Calendar;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+
 
 public class Signup extends AppCompatActivity {
     String path;
@@ -36,13 +48,22 @@ public class Signup extends AppCompatActivity {
     ImageView img;
     Spinner gender;
     DatabaseReference myref;
+    private StorageReference fileRef;
+    private StorageReference imageReference;
     FirebaseAuth mauth;
+
+    private Uri fileUri;
 
     TextView lin, sup;
     private static final int PICK_IMAGE = 100;
     EditText name, email, phone, pswd, address, lic, dob;
     String vemail,passwrd,vname,mob,vaddress,vdob,vlic,vgender,key;
     String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+
+
+
+
+
 
 
     @Override
@@ -58,7 +79,9 @@ public class Signup extends AppCompatActivity {
 
         mauth= FirebaseAuth.getInstance();
         myref = FirebaseDatabase.getInstance().getReference("Volunteers");
+        //mstorage = FirebaseStorage.getInstance().getReference();
         sup = (TextView) findViewById(R.id.sbtn);
+        img = (ImageView)findViewById(R.id.profile);
         name = (EditText) findViewById(R.id.name);
         email = (EditText) findViewById(R.id.email);
         phone = (EditText) findViewById(R.id.mono);
@@ -69,6 +92,11 @@ public class Signup extends AppCompatActivity {
         dob = (EditText) findViewById(R.id.dob);
         gender = (Spinner) findViewById(R.id.gen);
         lin = (TextView)findViewById(R.id.login);
+
+        imageReference = FirebaseStorage.getInstance().getReference().child("images");
+        fileRef = null;
+
+
         dob.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -104,7 +132,8 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(gallery, PICK_IMAGE);
+//                startActivityForResult(gallery, PICK_IMAGE);
+                startActivityForResult(Intent.createChooser(gallery, "Select Picture"), PICK_IMAGE);
             }
         });
 
@@ -228,7 +257,7 @@ public class Signup extends AppCompatActivity {
             check = false;
         }
         if (ph.length() != 10) {
-            phone.setError("Phone cannot be Empty");
+            phone.setError("Phone number not Valid");
             check = false;
         }
         if (add.length() == 0) {
@@ -249,10 +278,52 @@ public class Signup extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
-            imageUri = data.getData();
-            img.setImageURI(imageUri);
-            path = String.valueOf(imageUri);
+
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            fileUri = data.getData();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), fileUri);
+                UploadImageFileToFirebaseStorage(fileUri);
+                img.setImageBitmap(bitmap);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
         }
+    }
+
+    private void UploadImageFileToFirebaseStorage(Uri fileUri) {
+        fileRef = imageReference.child(UUID.randomUUID().toString() + "." + getFileExtension(fileUri));
+
+        fileRef.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                /*String name = taskSnapshot.getMetadata().getName();
+                //final String url = taskSnapshot.getDownloadUrl().toString();
+               // myref.child(key).child("Image").setValue(url);
+            */
+
+                Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                while (!urlTask.isSuccessful());
+                Uri downloadUrl = urlTask.getResult();
+
+                final String sdownload_url = String.valueOf(downloadUrl);
+                myref.child(key).child("Image").setValue(downloadUrl);
+
+
+
+            }
+        });
+
+    }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+
+        return mime.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 }

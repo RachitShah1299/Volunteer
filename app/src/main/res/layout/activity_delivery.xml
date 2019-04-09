@@ -21,10 +21,10 @@
         android:text="Deliver " />
 
     <TextView
+        android:id="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/address"
-        android:layout_below="@id/deliver_btn"
-        />
+        android:layout_below="@id/deliver_btn" />
+
 </RelativeLayout>
 

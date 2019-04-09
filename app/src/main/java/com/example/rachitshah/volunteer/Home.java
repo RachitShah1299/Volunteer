@@ -1,5 +1,6 @@
 package com.example.rachitshah.volunteer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -29,17 +30,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView name, email, demo;
     ImageView imageView;
-
+    String strname, stremail;
     ListView listView;
-    DatabaseReference myref;
-
+    DatabaseReference myref,volunteerinfo,foodrequestacceptref;
+    FoodRequestAcceptance foodRequestAcceptance;
     ArrayList<FoodRequest> foodrequest;
     String key;
 
@@ -48,29 +52,61 @@ public class Home extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        /*this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //show the activity in full screen
-
+*/
         setContentView(R.layout.activity_home);
-        loadBar();
 
         myref = FirebaseDatabase.getInstance().getReference("FoodRequest");
-
+        volunteerinfo = FirebaseDatabase.getInstance().getReference("Volunteers");
+        foodrequestacceptref = FirebaseDatabase.getInstance().getReference("FoodRequestAcceptance");
 
         listView = (ListView) findViewById(R.id.vol_home_liv);
 
         foodrequest = new ArrayList<>();
-
+        loadBar();
 
         myref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.e("KEYKEY", "BEFORE LOOOP");
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    foodRequestAcceptance = snapshot.getValue(FoodRequestAcceptance.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+         myref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 Log.e("KEYKEY", "BEFORE LOOOP");
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
+                    Date c = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+                    String formattedDate = df.format(c);
+
                     FoodRequest users = snapshot.getValue(FoodRequest.class);
-                    foodrequest.add(users);
+                    Log.e("HELLOOOO","Date is: "+ users.getFddate());
+                    Log.e("HELLOOOO","Date are: "+ formattedDate);
+                    if(formattedDate.compareTo(users.getFddate()) == 0){
+                        if(foodRequestAcceptance.getFrid().equals(users.getKey())){
+
+                        }
+                        else{
+                            foodrequest.add(users);
+                        }
+
+                    }
+
 
                     Log.e("KEYKEY", "KEY IS " + users.getKey());
 
@@ -111,8 +147,8 @@ public class Home extends AppCompatActivity
         email = (TextView) header.findViewById(R.id.nav_email);
            imageView = (ImageView) header.findViewById(R.id.header_image);
 
-        String strname, stremail;
-        SharedPreferences sharedPreferences = getSharedPreferences("Volunteer", MODE_PRIVATE);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Volunteer_log", Context.MODE_PRIVATE);
 
         /*Uri uri = Uri.parse(sharedPreferences.getString("Profile", "???"));
         imageView.setImageURI(null);
@@ -120,12 +156,27 @@ public class Home extends AppCompatActivity
 
         imageView.setImageResource(R.drawable.vv);
 
-        strname = sharedPreferences.getString("Name", "");
         stremail = sharedPreferences.getString("Email", "");
+        Log.e("STREMAILID","IS "+stremail);
+        volunteerinfo.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Volunteers users = snapshot.getValue(Volunteers.class);
+                    if(stremail.equals(users.getemail())){
+                        strname=users.getVname();
+                        name.setText(strname);
+                    }
+                }
+            }
 
-        name.setText(strname);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         email.setText(stremail);
-
 
     }
 

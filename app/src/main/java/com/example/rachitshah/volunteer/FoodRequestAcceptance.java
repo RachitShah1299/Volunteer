@@ -1,7 +1,7 @@
 package com.example.rachitshah.volunteer;
 
 class FoodRequestAcceptance {
-    String key,vname,rname,loc,status,fddate,rid,address;
+    String key,vname,rname,loc,status,fddate,rid,address,frid;
     public String getKey() {
         return key;
     }
@@ -60,6 +60,15 @@ class FoodRequestAcceptance {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+
+    public String getFrid() {
+        return frid;
+    }
+
+    public void setFrid(String frid) {
+        this.frid = frid;
     }
 
 }

@@ -18,6 +18,7 @@
     <string name="request_id">Request Id</string>
     <string name="Open_Navigation">Open Navigation</string>
     <string name="Close_Navigation">Close Navigation</string>
+    <string name="Call"><u>Call Now</u></string>
 
     <string name="Gender_Prompt">Gender</string>
     <string-array name="Gender">
